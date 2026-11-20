@@ -9,4 +9,6 @@
 /detector 记录待调取窗口，参考时钟是毫秒整数，窗口右端不包含。/sessions 有录音会话内的样本数、采样率、起始设备 tick 和下载 URL。设备 tick 为毫秒。/clock anchors 的每项为 [tick,参考时钟,最大误差]。anchor 之间的名义时钟线性变化，maxError 给出本段额外误差，区间外没有可信换算。slices 列出实际存储连续区间，缺号表示来源明确没有该段。
 /terminal 状态中的 budget 以本次出车可取的音频字节计。PCM 为有符号 16 位、小端、单声道。取件按 HTTP Range 字节定位，返回 Content-Range；部分旧会话会返回 410，临时断连返回 503。/deliveries 保存已经交付的窗口和原件范围。
 
+会话的 acquisitionHint 给值班员粗略的可落入参考时段和最晚留存车次，不能据此归属样本。terminal 的 trip 是正在执行的出车号。未提供提示的会话只有实际对时记录可用于查询。
+
 运行 `npm test` 可校验资料源实际应答。样本内容存放在 `samples/`，开发时通过各来源的本地地址进行联调。

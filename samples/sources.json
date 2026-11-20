@@ -61,7 +61,14 @@
                 3200,
                 6400
               ]
-            ]
+            ],
+            "acquisitionHint": {
+              "mayFallInReference": [
+                100440,
+                101080
+              ],
+              "retainThroughTrip": 1
+            }
           },
           {
             "device": "K",
@@ -75,7 +82,14 @@
                 0,
                 6400
               ]
-            ]
+            ],
+            "acquisitionHint": {
+              "mayFallInReference": [
+                100570,
+                100960
+              ],
+              "retainThroughTrip": 1
+            }
           },
           {
             "device": "J",
@@ -148,12 +162,14 @@
           {
             "device": "K",
             "budget": 22000,
-            "online": true
+            "online": true,
+            "trip": 1
           },
           {
             "device": "J",
             "budget": 12000,
-            "online": false
+            "online": false,
+            "trip": 1
           }
         ],
         "status": 200,
@@ -263,12 +279,14 @@
           {
             "device": "K",
             "budget": 6000,
-            "online": true
+            "online": true,
+            "trip": 2
           },
           {
             "device": "J",
             "budget": 20000,
-            "online": true
+            "online": true,
+            "trip": 2
           }
         ],
         "status": 200,
