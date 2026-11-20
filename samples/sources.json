@@ -1,0 +1,322 @@
+{
+  "rounds": [
+    [
+      {
+        "path": "/detector",
+        "body": [
+          {
+            "id": "N1",
+            "site": "west",
+            "reference": [
+              100000,
+              100600
+            ],
+            "priority": 2
+          },
+          {
+            "id": "N2",
+            "site": "west",
+            "reference": [
+              100500,
+              101000
+            ],
+            "priority": 1
+          }
+        ],
+        "status": 200,
+        "method": "GET",
+        "request": null,
+        "headers": {}
+      },
+      {
+        "path": "/sessions",
+        "body": [
+          {
+            "device": "K",
+            "boot": "R7",
+            "file": "/pcm/K/R7/one",
+            "sampleRate": 8000,
+            "tickAtStart": 0,
+            "samples": 6400,
+            "slices": [
+              [
+                0,
+                6400
+              ]
+            ]
+          },
+          {
+            "device": "K",
+            "boot": "R7",
+            "file": "/pcm/K/R7/two",
+            "sampleRate": 16000,
+            "tickAtStart": 800,
+            "samples": 6400,
+            "slices": [
+              [
+                0,
+                1600
+              ],
+              [
+                3200,
+                6400
+              ]
+            ]
+          },
+          {
+            "device": "K",
+            "boot": "R8",
+            "file": "/pcm/K/R8/one",
+            "sampleRate": 8000,
+            "tickAtStart": 0,
+            "samples": 6400,
+            "slices": [
+              [
+                0,
+                6400
+              ]
+            ]
+          },
+          {
+            "device": "J",
+            "boot": "R5",
+            "file": "/pcm/J/R5/one",
+            "sampleRate": 8000,
+            "tickAtStart": 0,
+            "samples": 8000,
+            "slices": [
+              [
+                0,
+                8000
+              ]
+            ]
+          }
+        ],
+        "status": 200,
+        "method": "GET",
+        "request": null,
+        "headers": {}
+      },
+      {
+        "path": "/clock",
+        "body": [
+          {
+            "device": "K",
+            "boot": "R7",
+            "revision": 1,
+            "anchors": [
+              [
+                0,
+                99700,
+                30
+              ],
+              [
+                1200,
+                100900,
+                40
+              ]
+            ],
+            "maxError": 30
+          },
+          {
+            "device": "J",
+            "boot": "R5",
+            "revision": 1,
+            "anchors": [
+              [
+                0,
+                100000,
+                12
+              ],
+              [
+                1000,
+                101000,
+                12
+              ]
+            ],
+            "maxError": 10
+          }
+        ],
+        "status": 200,
+        "method": "GET",
+        "request": null,
+        "headers": {}
+      },
+      {
+        "path": "/terminal",
+        "body": [
+          {
+            "device": "K",
+            "budget": 22000,
+            "online": true
+          },
+          {
+            "device": "J",
+            "budget": 12000,
+            "online": false
+          }
+        ],
+        "status": 200,
+        "method": "GET",
+        "request": null,
+        "headers": {}
+      },
+      {
+        "path": "/deliveries",
+        "body": [
+          {
+            "id": "D-3",
+            "window": "N1",
+            "files": [
+              {
+                "key": "K/R7/one",
+                "frames": [
+                  2360,
+                  6400
+                ]
+              }
+            ],
+            "clockRevision": 1
+          }
+        ],
+        "status": 200,
+        "method": "GET",
+        "request": null,
+        "headers": {}
+      },
+      {
+        "path": "/pcm/J/R5/one",
+        "body": {},
+        "status": 503,
+        "method": "GET",
+        "request": null,
+        "headers": {}
+      }
+    ],
+    [
+      {
+        "path": "/clock",
+        "body": [
+          {
+            "device": "K",
+            "boot": "R7",
+            "revision": 2,
+            "anchors": [
+              [
+                0,
+                99820,
+                10
+              ],
+              [
+                1200,
+                101020,
+                10
+              ]
+            ],
+            "maxError": 10
+          },
+          {
+            "device": "J",
+            "boot": "R5",
+            "revision": 1,
+            "anchors": [
+              [
+                0,
+                100000,
+                12
+              ],
+              [
+                1000,
+                101000,
+                12
+              ]
+            ],
+            "maxError": 10
+          },
+          {
+            "device": "K",
+            "boot": "R8",
+            "revision": 1,
+            "anchors": [
+              [
+                0,
+                104000,
+                15
+              ],
+              [
+                800,
+                104802,
+                15
+              ]
+            ],
+            "maxError": 10
+          }
+        ],
+        "status": 200,
+        "method": "GET",
+        "request": null,
+        "headers": {}
+      },
+      {
+        "path": "/terminal",
+        "body": [
+          {
+            "device": "K",
+            "budget": 6000,
+            "online": true
+          },
+          {
+            "device": "J",
+            "budget": 20000,
+            "online": true
+          }
+        ],
+        "status": 200,
+        "method": "GET",
+        "request": null,
+        "headers": {}
+      },
+      {
+        "path": "/pcm/K/R7/two",
+        "body": {},
+        "status": 410,
+        "method": "GET",
+        "request": null,
+        "headers": {}
+      }
+    ]
+  ],
+  "assets": {
+    "/pcm/K/R7/one": {
+      "file": "one.pcm",
+      "digest": "d4268ff38bd9e929c2934400090da0b9dce6c8d2740dfdd2eb8287510f13f68e",
+      "contentType": "application/octet-stream"
+    },
+    "/pcm/K/R7/two": {
+      "file": "two.pcm",
+      "digest": "eeedf85728c7b08a4eb791440e22b310b5ca765c77bee3fe9cab5bd86072d1c6",
+      "contentType": "application/octet-stream",
+      "slices": [
+        [
+          0,
+          3200
+        ],
+        [
+          6400,
+          12800
+        ]
+      ]
+    },
+    "/pcm/K/R8/one": {
+      "file": "restart.pcm",
+      "digest": "695e264a2dc0bb89fd44e59ef80c1aedd1e662471313068aef3877fa724381df",
+      "contentType": "application/octet-stream"
+    },
+    "/pcm/J/R5/one": {
+      "file": "other.pcm",
+      "digest": "fd215178392fe50d3058a1b32d0847feff80101c6d8ee9913ff643719df9d1a1",
+      "contentType": "application/octet-stream",
+      "ignoreEarlierResponseFrom": 1
+    }
+  }
+}
