@@ -189,7 +189,9 @@
                 "frames": [
                   2360,
                   6400
-                ]
+                ],
+                "archive": "/archive/D-3/one",
+                "digest": "ede8b9b81d1fe5e7fab1d0dbbb2bc276bf5d417f1129e6385e2eeb460376d3f1"
               }
             ],
             "clockRevision": 1
@@ -301,6 +303,16 @@
         "method": "GET",
         "request": null,
         "headers": {}
+      },
+      {
+        "method": "GET",
+        "path": "/pcm/K/R8/one",
+        "status": 410,
+        "body": {
+          "reason": "retention"
+        },
+        "request": null,
+        "headers": {}
       }
     ]
   ],
@@ -335,6 +347,11 @@
       "digest": "fd215178392fe50d3058a1b32d0847feff80101c6d8ee9913ff643719df9d1a1",
       "contentType": "application/octet-stream",
       "ignoreEarlierResponseFrom": 1
+    },
+    "/archive/D-3/one": {
+      "file": "delivery-D-3.pcm",
+      "digest": "ede8b9b81d1fe5e7fab1d0dbbb2bc276bf5d417f1129e6385e2eeb460376d3f1",
+      "contentType": "application/octet-stream"
     }
   }
 }

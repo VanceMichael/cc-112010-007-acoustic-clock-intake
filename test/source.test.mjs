@@ -76,3 +76,23 @@ test('终端区分断线、明确过期与原始采样空档', async t => {
   assert.equal((await request(origin, '/pcm/K/R7/two', slice)).status, 410)
   assert.equal((await request(origin, '/pcm/J/R5/one', slice)).status, 206)
 })
+
+test('已交付样本可复取，同名终端原件仍各有留存状态', async t => {
+  const origin = await openSource(t)
+  assert.equal((await request(origin, '/pcm/K/R8/one')).status, 200)
+  const [delivered] = await (await request(origin, '/deliveries')).json()
+  const [part] = delivered.files
+  const [start, end] = part.frames
+  await view(origin, 1)
+  assert.equal((await request(origin, '/pcm/K/R8/one')).status, 410)
+  const archived = await request(origin, part.archive)
+  assert.equal(archived.status, 200)
+  const bytes = Buffer.from(await archived.arrayBuffer())
+  assert.equal(bytes.length, 2 * (end - start))
+  assert.equal(createHash('sha256').update(bytes).digest('hex'), part.digest)
+  const stillOnDevice = await request(origin, '/pcm/K/R7/one', {
+    headers: { range: 'bytes=' + (2 * start) + '-' + (2 * end - 1) },
+  })
+  assert.equal(stillOnDevice.status, 206)
+  assert.deepEqual(Buffer.from(await stillOnDevice.arrayBuffer()), bytes)
+})
