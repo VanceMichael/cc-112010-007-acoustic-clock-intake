@@ -14,3 +14,35 @@
 调查站独立保存已经交付的原始样本。deliveries.files 的 archive 返回曾交付的片段字节，frames 仍是该片段在终端原件内的位置，digest 校验该片段本身。终端原件的 410 不会撤销调查站已保留的文件。
 
 运行 `npm test` 可校验资料源实际应答。样本内容存放在 `samples/`，开发时通过各来源的本地地址进行联调。
+
+## 采集器（collector/）
+
+采集器是调查站侧的 Node.js 程序，负责把鉴听窗口翻译成有限字节下的领取计划，并把每次出车的证据留在本地。模块划分：
+
+- `collector/clock.mjs`：设备 tick 与参考时钟的线性换算。anchor 之间线性插值，误差在两端 anchor 误差间线性变化并叠加本段 `maxError`；anchor 覆盖域外不给任何可证实归属。
+- `collector/intervals.mjs`：半开整数帧/字节区间的交、并、差。
+- `collector/planner.mjs`：窗口×原件交叠判定、同原件合并、预算分配、三态分类。
+- `collector/source-client.mjs`：HTTP Range 取件，区分 `offline`(503 可重试)、`retention`(410 终态无机会)、`gap`(416/切片缺号，从未录到)。
+- `collector/store.mjs`：本地留存。真实取回的片段按帧位置存盘，附摘要；缺样、掉线、留存只落观察标记，绝不写填充音。
+- `collector/collector.mjs`：一次出车的编排与 `pendingView`/`refetchDelivery`。
+- `collector/cli.mjs`：命令行入口。
+
+业务规则落点：
+
+1. **共用领取的边界**：只有 `device + boot + file` 完全相同的交叠帧才合并成一份动作；终端重启复用旧文件名时 boot 不同即视为不同原件，不会合成一份。
+2. **预算优先序**：`priority` 数值大的窗口先满足；同一原件内可证实帧先于待判帧；交叠窗口的公共帧只领一次，动作的 `serves` 标注全部受益窗口。
+3. **待判保全**：对时锚尚未发布时，只凭 `acquisitionHint` 判断，若原件在下次出车前过期且可能落入高优先窗口，先整段保全并标 `pending`；补锚后只把可证实帧计入交付，未确定部分留在 `provisionalFrames`，不冒充已交付。
+4. **补锚复用**：新对时修订改变相交范围后，先查本地已持有帧，已领字节直接复用，只对缺口发 Range 请求。
+5. **三种取不到严格区分**：`gap`（来源 slices 缺号，从不重试）、`offline`（终端掉线，下次出车可重试，窗口不结项）、`retention`（410 留存覆盖，终态；调查站已归档片段仍可复取）。
+6. **版本与复取**：同一窗口每次出车形成一个交付版本，`refetch` 可复取任意历史版本；`digest` 是本地复取字节的实际摘要，`sourceDigest` 保留来源登记摘要。
+
+命令（先 `npm start` 启动资料源）：
+
+```bash
+npm run trip -- --origin http://127.0.0.1:4173 --state ./.intake-state   # 执行一次出车
+npm run report -- --state ./.intake-state                                # 最近一次出车结项
+npm run pending -- --state ./.intake-state                               # 可补/缺样/留存/掉线视图
+npm run refetch -- --delivery D-3 --state ./.intake-state                # 复取某次交付
+```
+
+状态目录中的 `state.json` 是台账，`fragments/` 是真实片段字节；删除状态目录即回到未出车状态。

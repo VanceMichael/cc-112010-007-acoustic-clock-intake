@@ -8,6 +8,10 @@
   },
   "scripts": {
     "start": "node serve.mjs",
-    "test": "node --test"
+    "test": "node --test",
+    "trip": "node collector/cli.mjs trip",
+    "pending": "node collector/cli.mjs pending",
+    "report": "node collector/cli.mjs report",
+    "refetch": "node collector/cli.mjs refetch"
   }
 }
